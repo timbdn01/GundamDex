@@ -1,4 +1,4 @@
-import sys
+import os
 def search_gundam(gundam_list):
     print("how would you like to search for a Gundam?")
     print("1. By Name")

@@ -24,4 +24,18 @@ class Gundam:
         if self.gunpla_available:
             info += f"Gunpla Grades: {', '.join(self.gunpla_grades)}\n"
         return info
-
+    def convert_from_text(self, text):
+        lines = text.strip().split('\n')
+        name = lines[0].split(': ')[1]
+        model_number = lines[1].split(': ')[1]
+        pilot = lines[2].split(': ')[1]
+        weapons = lines[3].split(': ')[1].split(', ')
+        series = lines[4].split(': ')[1]
+        status = lines[5].split(': ')[1]
+        height = (lines[6].split(': ')[1].split(' ')[0])
+        weight = (lines[7].split(': ')[1].split(' ')[0])
+        gunpla_available = lines[8].split(': ')[1] == 'Yes'
+        gunpla_grades = []
+        if gunpla_available:
+            gunpla_grades = lines[9].split(': ')[1].split(', ')
+        return Gundam(name, model_number, pilot, weapons, series, status, height, weight, gunpla_available, gunpla_grades)
