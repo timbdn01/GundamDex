@@ -2,6 +2,7 @@ from gundam import Gundam
 from add import add_gundam
 from search import search_gundam
 from edit import edit_gundam_info
+from remove import remove_gundam
 import sys
 import os
 
@@ -25,19 +26,24 @@ def main():
     options(gundam_list, directory_path)
 
 def options(gundam_list, directory_path):
-    print("What would you like to do?")
+    print("\n** What would you like to do? **")
     print("1. Add a Gundam")
     print("2. Search for a Gundam")
     print("3. Edit a Gundam")
     print("4. View all Gundams")
-    print("5. Exit\n")
+    print("5. Remove a Gundam")
+    print("6. Exit\n")
     input_choice = input("\nEnter your choice (1-5): ")
+    print("--------------------------------\n")
     match input_choice:
         case '1':
             new_gundam = add_gundam(directory_path)
             gundam_list.append(new_gundam)
             options(gundam_list, directory_path)
         case '2':
+            if gundam_list == []:
+                print("\nNo Gundams in the system to search.\n")
+                options(gundam_list, directory_path)
             search_gundam(gundam_list)
             options(gundam_list, directory_path)
         case '3':
@@ -55,7 +61,7 @@ def options(gundam_list, directory_path):
                     print("\nInvalid selection. Returning to main menu.\n")
                     options(gundam_list, directory_path)
                     return
-            edit_gundam_info(gundam_id)
+            edit_gundam_info(gundam_id, directory_path)
             options(gundam_list, directory_path)
         case '4':
             if gundam_list == []:
@@ -65,6 +71,24 @@ def options(gundam_list, directory_path):
                     print(gundam.display_info())
             options(gundam_list, directory_path)
         case '5':
+            if gundam_list == []:
+                print("\nNo Gundams in the system to remove.\n")
+                options(gundam_list, directory_path)
+            else:
+                print("\nSelect a Gundam to remove:")
+                for idx, gundam in enumerate(gundam_list):
+                    print(f"{idx + 1}. {gundam.name} ({gundam.model_number})")
+                selected_index = int(input("Enter the number of the Gundam to remove: ")) - 1
+                if 0 <= selected_index < len(gundam_list):
+                    gundam_id = gundam_list[selected_index]
+                else:
+                    print("\nInvalid selection. Returning to main menu.\n")
+                    options(gundam_list, directory_path)
+                    return
+            remove_gundam(gundam_id, directory_path)
+            gundam_list.remove(gundam_id)
+            options(gundam_list, directory_path)
+        case '6':
             print("\nExiting the system. Goodbye!")
             sys.exit(0)
 

@@ -1,10 +1,10 @@
 Gundam Name: Gundam
 Model Number: RX-78-2
 Pilot: Amuro Ray
-Weapons:
+Weapons: Beam Rifle
 Series: Mobile Suit Gundam
 Status: Destroyed
 Height: 18.0 meters
 Weight: 60.0 tons
 Gunpla Available: Yes
-Gunpla Grades: HG, RG, MG, PG
+Gunpla Grades: all

@@ -1,10 +1,10 @@
 Gundam Name: Freedom
-Model Number: 
+Model Number: ZGMF-X10A
 Pilot: Kira Yamato
-Weapons: 
-Series: 
-Status: 
-Height: None meters
-Weight: None tons
+Weapons: MA-M20 "Lupus" High-energy Beam Rifle
+Series: Mobile Suit Gundam SEED
+Status: Destroyed
+Height: 18.03 meters
+Weight: 71.5 tons
 Gunpla Available: Yes
 Gunpla Grades: all

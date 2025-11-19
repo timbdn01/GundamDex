@@ -1,4 +1,8 @@
-def edit_gundam_info(gundam_id):
+import os
+
+def edit_gundam_info(gundam_id, directory_path):
+    file_path = os.path.join(directory_path, f"{gundam_id.name.replace(' ', '_')}.txt")
+    old_name = gundam_id.name
     print(f"Editing information for {gundam_id.name}. Leave blank to keep current value.\n")
     new_name = input(f"Enter new Name (current: {gundam_id.name}): ").strip()
     if new_name:
@@ -33,5 +37,20 @@ def edit_gundam_info(gundam_id):
                 gundam_id.gunpla_grades = [grade.strip() for grade in grades_input.split(',')]
         else:
             gundam_id.gunpla_grades = None
+    try:
+        edit_txt_file(gundam_id, file_path, old_name)
+    except Exception as e:
+        print(f"Error updating Gundam data in file: {e}\n")
+        return
+    
     print("Gundam information updated successfully!\n")
+
+def edit_txt_file(gundam_id, file_path, old_name):
+    with open(file_path, 'w') as file:
+        file.write(gundam_id.display_info())
+    if old_name != gundam_id.name:
+        new_file_path = os.path.join(os.path.dirname(file_path), f"{gundam_id.name.replace(' ', '_')}.txt")
+        os.rename(file_path, new_file_path)
+        file_path = new_file_path
+    print(f"Gundam data updated in {file_path}\n")
     
