@@ -2,7 +2,7 @@ from gundam import Gundam
 from add import add_gundam
 from search import search_gundam
 from edit import edit_gundam_info
-from remove import remove_gundam
+from remove import remove_gundam, remove_all_gundams
 import sys
 import os
 
@@ -31,7 +31,7 @@ def options(gundam_list, directory_path):
     print("2. Search for a Gundam")
     print("3. Edit a Gundam")
     print("4. View all Gundams")
-    print("5. Remove a Gundam")
+    print("5. Remove")
     print("6. Exit\n")
     input_choice = input("\nEnter your choice (1-5): ")
     print("--------------------------------\n")
@@ -75,18 +75,28 @@ def options(gundam_list, directory_path):
                 print("\nNo Gundams in the system to remove.\n")
                 options(gundam_list, directory_path)
             else:
-                print("\nSelect a Gundam to remove:")
-                for idx, gundam in enumerate(gundam_list):
-                    print(f"{idx + 1}. {gundam.name} ({gundam.model_number})")
-                selected_index = int(input("Enter the number of the Gundam to remove: ")) - 1
-                if 0 <= selected_index < len(gundam_list):
-                    gundam_id = gundam_list[selected_index]
-                else:
-                    print("\nInvalid selection. Returning to main menu.\n")
-                    options(gundam_list, directory_path)
-                    return
-            remove_gundam(gundam_id, directory_path)
-            gundam_list.remove(gundam_id)
+                print("1. Remove a specific Gundam")
+                print("2. Remove all Gundams")
+                remove_choice = input("Enter your choice (1-2): ")
+                match remove_choice:
+                    case '1':
+                        print("\nSelect a Gundam to remove:")
+                        for idx, gundam in enumerate(gundam_list):
+                            print(f"{idx + 1}. {gundam.name} ({gundam.model_number})")
+                        selected_index = int(input("Enter the number of the Gundam to remove: ")) - 1
+                        if 0 <= selected_index < len(gundam_list):
+                            gundam_id = gundam_list[selected_index]
+                            remove_gundam(gundam_id, directory_path, gundam_list)
+                        else:
+                            print("\nInvalid selection. Returning to main menu.\n")
+                    case '2':
+                        confirm = input("Are you sure you want to remove all Gundams? (yes/no): ").strip().lower()
+                        if confirm == 'yes':
+                            remove_all_gundams(directory_path, gundam_list)
+                        else:
+                            print("\nOperation cancelled. Returning to main menu.\n")
+                    case _:
+                        print("\nInvalid choice. Returning to main menu.\n")
             options(gundam_list, directory_path)
         case '6':
             print("\nExiting the system. Goodbye!")
